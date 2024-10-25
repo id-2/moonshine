@@ -34,10 +34,10 @@ VERBOSE = False
 
 
 class Transcriber(object):
-    def __init__(self, models_dir=None, rate=16000):
+    def __init__(self, model_name, rate=16000):
         if rate != 16000:
             raise ValueError("Moonshine supports sampling rate 16000 Hz.")
-        self.model = MoonshineOnnxModel(models_dir=models_dir)
+        self.model = MoonshineOnnxModel(model_name=model_name)
         self.rate = rate
         assets_dir = f"{os.path.join(os.path.dirname(__file__), '..', 'assets')}"
         tokenizer_file = f"{assets_dir}{os.sep}tokenizer.json"
@@ -104,15 +104,15 @@ if __name__ == "__main__":
         description="Live captioning demo of Moonshine models",
     )
     parser.add_argument(
-        "--model_size",
+        "--model_name",
         help="Model to run the demo with",
-        default="moonshine_base_onnx",
-        choices=["moonshine_base_onnx", "moonshine_tiny_onnx"],
+        default="moonshine/base",
+        choices=["moonshine/base", "moonshine/tiny"],
     )
     args = parser.parse_args()
-    models_dir = os.path.join(os.path.dirname(__file__), "models", f"{args.model_size}")
-    print(f"Loading Moonshine model '{models_dir}' ...")
-    transcribe = Transcriber(models_dir=models_dir, rate=SAMPLING_RATE)
+    model_name = args.model_name
+    print(f"Loading Moonshine model '{model_name}' (using ONNX runtime) ...")
+    transcribe = Transcriber(model_name=model_name, rate=SAMPLING_RATE)
 
     vad_model = load_silero_vad(onnx=True)
     vad_iterator = VADIterator(
@@ -184,7 +184,7 @@ if __name__ == "__main__":
 
             print(f"""
 
-             model_size :  {args.model_size}
+             model_name :  {model_name}
        MIN_REFRESH_SECS :  {MIN_REFRESH_SECS}s
 
       number inferences :  {transcribe.number_inferences}
