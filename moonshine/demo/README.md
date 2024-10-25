@@ -74,11 +74,14 @@ You will need to clone the repo first:
 git clone git@github.com:usefulsensors/moonshine.git
 ```
 
-Then install the demo's extra requirements:
+Then install the demo's requirements:
 
 ```shell
 uv pip install -r moonshine/moonshine/demo/requirements.txt
 ```
+
+There is a dependency on `torch` because of `silero-vad` package.  There is no
+dependency on `tensorflow`.
 
 #### Ubuntu: Install PortAudio
 
