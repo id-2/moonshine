@@ -110,8 +110,7 @@ if __name__ == "__main__":
         choices=["moonshine_base_onnx", "moonshine_tiny_onnx"],
     )
     args = parser.parse_args()
-    model_size = args.model_size
-    models_dir = os.path.join(os.path.dirname(__file__), "models", f"{model_size}")
+    models_dir = os.path.join(os.path.dirname(__file__), "models", f"{args.model_size}")
     print(f"Loading Moonshine model '{models_dir}' ...")
     transcribe = Transcriber(models_dir=models_dir, rate=SAMPLING_RATE)
 
@@ -185,7 +184,7 @@ if __name__ == "__main__":
 
             print(f"""
 
-             model_size :  {model_size}
+             model_size :  {args.model_size}
        MIN_REFRESH_SECS :  {MIN_REFRESH_SECS}s
 
       number inferences :  {transcribe.number_inferences}
