@@ -155,7 +155,8 @@ This is an example of the Moonshine base model being used to generate live capti
 
 For comparison, this is the `faster-whisper` base model on the same instance.
 The value of `MIN_REFRESH_SECS` was increased as the model inference is too slow
-for a value of 0.2 seconds.
+for a value of 0.2 seconds.  Our Moonshine base model runs ~ 7x faster for this
+example.
 
 ```console
 (env_moonshine_faster_whisper) parallels@ubuntu-linux-2404:~$ python3 moonshine/moonshine/demo/live_captions.py
