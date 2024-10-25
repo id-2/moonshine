@@ -126,7 +126,7 @@ First, check that your microphone is connected and that the volume setting is no
 python3 moonshine/moonshine/demo/live_captions.py
 ```
 
-By default, this will run the demo with the Moonshine base ONNX model. The `--model_size` argument sets the model to use: supported arguments are `moonshine_base_onnx` and `moonshine_tiny_onnx`. 
+By default, this will run the demo with the Moonshine base ONNX model. The `--model_size` argument sets the model to use: supported arguments are `moonshine_base_onnx` and `moonshine_tiny_onnx`.
 
 When running, speak in English language to the microphone and observe live captions in the terminal. Quit the demo with `Ctrl+C` to see a full printout of the captions.
 
@@ -153,7 +153,7 @@ This is an example of the Moonshine base model being used to generate live capti
 (env_moonshine_demo) parallels@ubuntu-linux-2404:~$
 ```
 
-For comparison, this is the `faster-whisper` int8 base model on the same instance.
+For comparison, this is the `faster-whisper` base model on the same instance.
 The value of `MIN_REFRESH_SECS` was increased as the model inference is too slow
 for a value of 0.2 seconds.
 
