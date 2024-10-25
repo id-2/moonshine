@@ -110,12 +110,12 @@ model:
 ```console
 (env_moonshine_demo) parallels@ubuntu-linux-2404:~$ python3 moonshine/moonshine/demo/live_captions.py
 Error in cpuinfo: prctl(PR_SVE_GET_VL) failed
-Loading Moonshine model '/home/parallels/moonshine/moonshine/demo/models/moonshine_base_onnx' ...
+Loading Moonshine model 'moonshine/base' (ONNX runtime) ...
 Press Ctrl+C to quit live captions.
 
 hine base model being used to generate live captions while someone is speaking. ^C
 
-             model_size :  moonshine_base_onnx
+             model_name :  moonshine/base
        MIN_REFRESH_SECS :  0.2s
 
       number inferences :  25
@@ -140,7 +140,7 @@ Press Ctrl+C to quit live captions.
 
 r float32 base model being used to generate captions while someone is speaking. ^C
 
-             model_size :  base.en
+             model_name :  base.en
        MIN_REFRESH_SECS :  1.2s
 
       number inferences :  6
