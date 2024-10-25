@@ -9,7 +9,6 @@ Moonshine ASR models.
   - [Installation.](#installation)
     - [0. Setup environment](#0-setup-environment)
     - [1. Clone the repo and install extra dependencies](#1-clone-the-repo-and-install-extra-dependencies)
-    - [2. Download the ONNX models](#download-the-onnx-models)
   - [Running the demo](#running-the-demo)
   - [Script notes](#script-notes)
     - [Speech truncation and hallucination](#speech-truncation-and-hallucination)
@@ -52,7 +51,7 @@ moonshine/moonshine/demo/onnx_standalone.py --models_dir moonshine_base_onnx --w
 
 https://github.com/user-attachments/assets/aa65ef54-d4ac-4d31-864f-222b0e6ccbd3
 
-This folder contains a demo of live captioning from microphone input, built on Moonshine. The script runs the Moonshine model on segments of speech detected in the microphone signal using a voice activity detector called [`silero-vad`](https://github.com/snakers4/silero-vad). The script prints scrolling text or "live captions" assembled from the model predictions to the console.
+This folder contains a demo of live captioning from microphone input, built on Moonshine. The script runs the Moonshine ONNX model on segments of speech detected in the microphone signal using a voice activity detector called [`silero-vad`](https://github.com/snakers4/silero-vad). The script prints scrolling text or "live captions" assembled from the model predictions to the console.
 
 The following steps have been tested in a `uv` (v0.4.25) virtual environment on these platforms:
 
@@ -93,34 +92,6 @@ sudo apt upgrade -y
 sudo apt install -y portaudio19-dev
 ```
 
-### 2. Download the ONNX models
-
-The script finds ONNX base or tiny models in the
-`demo/models/moonshine_base_onnx` and `demo/models/moonshine_tiny_onnx`
-sub-folders.
-
-Download Moonshine `onnx` model files from HuggingFace hub.
-```shell
-cd
-mkdir moonshine/moonshine/demo/models
-mkdir moonshine/moonshine/demo/models/moonshine_base_onnx
-mkdir moonshine/moonshine/demo/models/moonshine_tiny_onnx
-
-cd
-cd moonshine/moonshine/demo/models/moonshine_base_onnx
-wget https://huggingface.co/UsefulSensors/moonshine/resolve/main/onnx/base/preprocess.onnx
-wget https://huggingface.co/UsefulSensors/moonshine/resolve/main/onnx/base/encode.onnx
-wget https://huggingface.co/UsefulSensors/moonshine/resolve/main/onnx/base/uncached_decode.onnx
-wget https://huggingface.co/UsefulSensors/moonshine/resolve/main/onnx/base/cached_decode.onnx
-
-cd
-cd moonshine/moonshine/demo/models/moonshine_tiny_onnx
-wget https://huggingface.co/UsefulSensors/moonshine/resolve/main/onnx/tiny/preprocess.onnx
-wget https://huggingface.co/UsefulSensors/moonshine/resolve/main/onnx/tiny/encode.onnx
-wget https://huggingface.co/UsefulSensors/moonshine/resolve/main/onnx/tiny/uncached_decode.onnx
-wget https://huggingface.co/UsefulSensors/moonshine/resolve/main/onnx/tiny/cached_decode.onnx
-```
-
 ## Running the demo
 
 First, check that your microphone is connected and that the volume setting is not muted in your host OS or system audio drivers. Then, run the script:
@@ -129,7 +100,7 @@ First, check that your microphone is connected and that the volume setting is no
 python3 moonshine/moonshine/demo/live_captions.py
 ```
 
-By default, this will run the demo with the Moonshine base ONNX model. The `--model_size` argument sets the model to use: supported arguments are `moonshine_base_onnx` and `moonshine_tiny_onnx`.
+By default, this will run the demo with the Moonshine Base model using the ONNX runtime. The optional `--model_name` argument sets the model to use: supported arguments are `moonshine/base` and `moonshine/tiny`.
 
 When running, speak in English language to the microphone and observe live captions in the terminal. Quit the demo with `Ctrl+C` to see a full printout of the captions.
 
@@ -196,7 +167,7 @@ Some hallucinations will be seen when the script is running: one reason is speec
 If you run this script on a slower processor, consider using the `tiny` model.
 
 ```shell
-python3 ./moonshine/moonshine/demo/live_captions.py --model_size moonshine_tiny_onnx
+python3 ./moonshine/moonshine/demo/live_captions.py --model_name moonshine/tiny
 ```
 
 The value of `MIN_REFRESH_SECS` will be ineffective when the model inference time exceeds that value.  Conversely on a faster processor consider reducing the value of `MIN_REFRESH_SECS` for more frequent caption updates.  On a slower processor you might also consider reducing the value of `MAX_SPEECH_SECS` to avoid slower model inferencing encountered with longer speech segments.
